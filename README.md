@@ -10,6 +10,8 @@ for an alarm if more then 85% is used.
 
 In this case the programm will run a script named hdcontrol.sh
 
+Start it as a cronjob.
+
 The system needs the file iconx to run.
 
 The program is written in ICON.
