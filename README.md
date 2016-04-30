@@ -1,5 +1,3 @@
-# HDCONTROL
-Controls the free space of the SD card from a RASPBERRY PI and alarms if the card runs full.
 HD1, hdcontrol checks the SD card of a RASPBERRY Pi.
 
 Place the files in a directory of your choice.
