@@ -1,0 +1,55 @@
+## Programm zur Überwachung des Datenträgers
+#######################
+
+####################
+procedure list_text()
+## wenn ohne parameterübergabe
+write("Überwacht den Speicherplatz des 1. Datenträgers")
+write("Aufruf ./hdcontrol %  z.B. 90%")
+write("Wenn der Wert überschritten wird erfolgt Meldung")
+write("Es wird ein script gestartet das die Meldung versendet")
+write("Das script hat den Namen hdcontrol.sh und muss im gleichen Pfad sein!")
+fh:=open("hdcontrol.sh","r")  | stop("Kann leider hdcontrol.sh nicht finden, muss aufhören!")
+write("Das script hdcontrol.sh ist vorhanden.")
+close(fh)
+exit(1)
+end
+#####################
+procedure main(args)
+system("clear")
+if *args  =0  then list_text()
+fh:=open("hdcontrol.sh","r")  | stop("Kann leider hdcontrol.sh nicht finden, muss aufhören!")
+close(fh)
+wert:=args[1]
+if wert < 10  then 
+{ write("Der Wert ",wert,"  ist zu niedrig, er muss grösser als 10 sein")
+exit(1)
+}
+if wert > 99  then 
+{write("Der Wert ",wert," ist zu hoch, er muss kleiner  als 99 sein")
+exit(1)
+}
+system("df -h / > hdtemp.txt")
+fh:=open("hdtemp.txt","r")  | stop("Kann leider hdtemp.txt nicht öffnen, muss aufhören!")
+line:=read(fh)
+zahl:=read(fh)
+close(fh)
+write("Das Ergebnis:",zahl )
+write(zahl)
+pos2:=find ("%",zahl) 
+pos1:=(pos2-3)
+belegt:=zahl[pos2:pos1]
+if belegt > wert then
+{
+write("Es sind ",belegt,"% belegt, das ist zuviel, es erfolgt eine Meldung")
+system("./hdcontrol.sh" || belegt)
+}
+else 
+{
+write("Es sind ",belegt,"% belegt, also noch ",100-belegt,"% verfügbar")
+}
+end
+###############################
+## Proceduren für Bildschirm
+
+
